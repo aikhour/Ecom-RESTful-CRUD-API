@@ -130,6 +130,8 @@ module.exports = class UserModel {
             if(result.rows?.length) {
                 return result.rows[0, 10];
             }
+            // if unsuccessful
+            return null;
 
         } catch(error) {
             throw new Error(error);
@@ -137,7 +139,32 @@ module.exports = class UserModel {
     }
 
 
+    /**
+     * DELETE delete user by id
+     * @params {Integer} id [User id]
+     * @return {Object|null} [Confirmation of deletion]
+     */
+    async deleteUser(id) {
+        try {
 
+            // generate sql statement
+            const statement = `DELETE FROM users WHERE id = $1`;
+            const values = [id];
+
+            // execute statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if(result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }
 
 
 }
