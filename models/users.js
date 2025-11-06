@@ -31,7 +31,7 @@ module.exports = class UserModel {
 
 
     /**
-     * Updates a user record
+     * PUT Updates a user record
      * @param {Object} data [User data]
      * @returns {Object|null} [User record created]
      */
@@ -63,7 +63,7 @@ module.exports = class UserModel {
     }
 
     /**
-     * Get user record by email
+     * GET Get user record by email
      * @param {String} email [User email]
      * @returns {Object|null} [User record]
      */
@@ -87,7 +87,54 @@ module.exports = class UserModel {
         }
     }
 
+    /**
+     * GET Get user record by id
+     * @param {Integer} id [User ID]
+     * @return {Object|null} [User Record]
+     */
+    async getUserById(id) {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM users WHERE id = $1`;
+            const values = [id];
 
+            // execute sql statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }
+
+    /**
+     * GET Get all users
+     * @return {Object|null} [First 10 User Records]
+     */
+    async getAllUsers() {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM users LIMIT 10`;
+
+            // execute sql statement
+            const result = await db.query(statement);
+
+            // if success
+            if(result.rows?.length) {
+                return result.rows[0, 10];
+            }
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }
 
 
 
