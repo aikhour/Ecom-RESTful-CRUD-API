@@ -115,6 +115,25 @@ module.exports = (app) => {
         }
     })
 
+    /**
+     * POST create user
+     * @params {Object} data [New User Data]
+     * @returns {Object|null} [New User Record]
+     */
+    router.post('/users', async (req, res, next) => {
+        try {
+            // get data
+            const data = req.body;
 
+            // response from service call
+            const response = await UserServiceInstance.createUser(data);
+
+            // success
+            res.status(201).send(`User record created at id: ${id}`);
+
+        } catch(error) {
+            next(error);
+        }
+    })
 }
 
