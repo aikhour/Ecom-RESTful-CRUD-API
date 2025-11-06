@@ -64,11 +64,27 @@ module.exports = class UserModel {
 
     /**
      * Get user record by email
-     * @param {Object} email [User email]
+     * @param {String} email [User email]
      * @returns {Object|null} [User record]
      */
     async getUserByEmail(email) {
-        
+        try {
+            // generate SQL statement
+            const statement = `SELECT * FROM users WHERE email = $1`;
+            const values = [email];
+            // execute sql statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if(result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+        } catch(error) {
+            throw new Error(error);
+        }
     }
 
 
