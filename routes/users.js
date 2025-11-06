@@ -120,7 +120,7 @@ module.exports = (app) => {
      * @params {Object} data [New User Data]
      * @returns {Object|null} [New User Record]
      */
-    router.post('/users', async (req, res, next) => {
+    router.post('/', async (req, res, next) => {
         try {
             // get data
             const data = req.body;
@@ -129,7 +129,7 @@ module.exports = (app) => {
             const response = await UserServiceInstance.createUser(data);
 
             // success
-            res.status(201).send(`User record created at id: ${id}`);
+            res.status(201).send(response);
 
         } catch(error) {
             next(error);

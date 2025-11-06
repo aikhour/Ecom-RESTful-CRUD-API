@@ -112,6 +112,7 @@ module.exports = class UserService {
             
             // if success
             return user;
+            
         } catch(error) {
             throw error;
         }

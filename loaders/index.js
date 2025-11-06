@@ -1,6 +1,10 @@
 const routeLoader = require('../routes');
+const expressLoader = require('./express');
 
 module.exports = async (app) => {
+
+    // Load express middlewares
+    const expressApp = await expressLoader(app);
 
     // Load API route handlers
     await routeLoader(app);
@@ -11,6 +15,6 @@ module.exports = async (app) => {
 
         const { message, status } = err;
     
-    return res.status(status || 500).send({ message });
+    return res.status(status).send({ message, cause });
     });
 }
