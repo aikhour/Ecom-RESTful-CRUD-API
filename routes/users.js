@@ -89,7 +89,24 @@ module.exports = (app) => {
 
     })
 
+    /**
+     * DELETE delete user by id
+     * @params {Integer} id [User id]
+     * @return {Object|null} [Confirmation of deletion]
+     */
+    router.get('/:userId', async (req, res, next) => {
+        try {
+            // get userId
+            const { userId } = req.params;
 
+            // response from delete call
+            const response = await UserServiceInstance.deleteUser({ id: userId });
+            // success
+            res.status(200).send(response);
+        } catch(error) {
+            next(error);
+        }
+    })
 
 
 }
