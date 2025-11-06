@@ -33,6 +33,8 @@ module.exports = (app) => {
      * @params {String} data [User email]
      * @returns {Object|null} [User record]
      */
+
+    /*
     router.get('/:userEmail', async (req, res, next) => {
 
         try {
@@ -48,11 +50,14 @@ module.exports = (app) => {
             next(error);
         }
     });
-
+    */
+    
+    
     /**
      * GET get all users
      * @return {Object|null} [First 10 User records]
      */
+    
     router.get('/', async (req, res, next) => {
 
         try {
@@ -64,13 +69,15 @@ module.exports = (app) => {
             next(error);
         }
     })
+    
+
 
     /**
      * PUT update user
      * @params {Object} data [User New Data]
      * @returns {Object|null} [User Record]
      */
-    router.get('/:userId', async (req, res, next) => {
+    router.put('/:userId', async (req, res, next) => {
         
 
         try {
@@ -94,7 +101,7 @@ module.exports = (app) => {
      * @params {Integer} id [User id]
      * @return {Object|null} [Confirmation of deletion]
      */
-    router.get('/:userId', async (req, res, next) => {
+    router.delete('/:userId', async (req, res, next) => {
         try {
             // get userId
             const { userId } = req.params;
@@ -102,7 +109,7 @@ module.exports = (app) => {
             // response from delete call
             const response = await UserServiceInstance.deleteUser({ id: userId });
             // success
-            res.status(200).send(response);
+            res.status(204).send(response);
         } catch(error) {
             next(error);
         }
