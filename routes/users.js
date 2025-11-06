@@ -53,7 +53,7 @@ module.exports = (app) => {
      * GET get all users
      * @return {Object|null} [First 10 User records]
      */
-    router.get('', async (req, res, next) => {
+    router.get('/', async (req, res, next) => {
 
         try {
             // response from service call
@@ -65,7 +65,29 @@ module.exports = (app) => {
         }
     })
 
+    /**
+     * PUT update user
+     * @params {Object} data [User New Data]
+     * @returns {Object|null} [User Record]
+     */
+    router.get('/:userId', async (req, res, next) => {
+        
 
+        try {
+            // get userId and data
+            const { userId } = req.params;
+            const data = req.body;
+
+            // response from service call
+            const response = await UserServiceInstance.updateUser({ id: userId, ...data});
+            // success
+            res.status(200).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+
+    })
 
 
 
