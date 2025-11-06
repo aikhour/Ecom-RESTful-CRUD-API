@@ -8,9 +8,9 @@ const pool = new Pool({
     password: DB.PGDATABASE,
     host: DB.PGHOST,
     database: DB.PGDATABASE,
-    port: DB.PGPORT
+    port: DB.PGPORT,
 });
 
 module.exports = {
-    query: (text, params) => pool.query(text, params);
+    query: (text, params) => pool.query(text, params)
 }
