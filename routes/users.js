@@ -133,13 +133,31 @@ module.exports = (app) => {
             next(error);
         }
     })
+    // delete user on /users route
+    router.delete('/', async (req, res, next) => {
+        try {
+            // get userId
+            const data = req.body;
+            const userId =  data.id;
+
+            // response from delete call
+            const response = await UserServiceInstance.deleteUser({ id: userId });
+            // success
+            res.status(200).send(`User account deleted`);
+        } catch(error) {
+            next(error);
+        }
+    })
+
+    // user registering / create users
+
 
     /**
      * POST create user
      * @params {Object} data [New User Data]
      * @returns {Object|null} [New User Record]
      */
-    router.post('/', async (req, res, next) => {
+    app.post('/register', async (req, res, next) => {
         try {
             // get data
             const data = req.body;
