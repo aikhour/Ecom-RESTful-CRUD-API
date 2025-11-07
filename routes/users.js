@@ -95,6 +95,25 @@ module.exports = (app) => {
         }
 
     })
+    // PUT on /users route
+    router.put('/', async (req, res, next) => {
+        
+
+        try {
+            // get userId and data
+            const data = req.body;
+            const userId = data.id;
+
+            // response from service call
+            const response = await UserServiceInstance.updateUser({ id: userId, ...data});
+            // success
+            res.status(200).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+
+    })
 
     /**
      * DELETE delete user by id
