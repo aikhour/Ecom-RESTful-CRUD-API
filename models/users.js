@@ -19,7 +19,7 @@ module.exports = class UserModel {
         // returns record if successful
         if(result.rows?.length) {
             return {
-                message: `User record created.`,
+                message: `User [${data.username}] created.`,
                 record: result.rows[0]
             }
         }
@@ -47,14 +47,17 @@ module.exports = class UserModel {
         // condition for change
         const condition = pgp.as.format('WHERE id = ${id} RETURNING *', {id});
         // change all but user id
-        const statement = pgp.helpers.update(params, null, 'users') + condition;
+        const statement = pgp.helpers.update(params, null, 'user_table') + condition;
         
         // execute statement
         const result = await db.query(statement);
 
         // if successful
         if(result.rows?.length) {
-            return result.rows[0];
+            return {
+                message: `User account [${params.username}] updated.`,
+                record: result.rows[0]
+            }
         }
 
         // if not succcessful
