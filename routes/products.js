@@ -81,7 +81,7 @@ module.exports = (app) => {
             const productId = data.id;
 
             // response from service call
-            const response = await ProductServiceInstance.updateUser({ id: productId, ...data});
+            const response = await ProductServiceInstance.updateProduct({ id: productId, ...data});
             // success
             res.status(200).send(response);
 
