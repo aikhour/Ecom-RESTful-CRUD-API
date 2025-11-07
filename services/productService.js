@@ -49,7 +49,7 @@ module.exports = class ProductService {
      * GET get all products
      * @return {Object|null} [First 10 Product records]
      */
-    async getAllUsers() {
+    async getAllProducts() {
         try {
             // check for Product records
             const products = await ProductModelInstance.getAllProducts();
@@ -68,10 +68,10 @@ module.exports = class ProductService {
 
     /**
      * GET get product from id
-     * @params {Object} data [Product id]
+     * @params {Integer} data [Product id]
      * @returns {Object|null} [Product Record]
      */
-    async getUserById(data) {
+    async getProductById(data) {
         try {
 
             const { id } = data;
@@ -84,6 +84,31 @@ module.exports = class ProductService {
             }
             // if success, return
             return product;
+
+        } catch(error) {
+            throw error;
+        }
+    }
+
+    /**
+     * GET get products from category
+     * @params {String} data [Product category]
+     * @return {Object|null} [Product records]
+     */
+    async getProductsByCategory(data) {
+        try {
+            // get category data
+            const { category } = data;
+            // check for product record
+            const products = await ProductModelInstance.getProductByCategory(category);
+
+            // If product doesn't exist, reject
+            if(!products) {
+                throw createError(404, 'Product record not found');
+            }
+            // if success, return
+            return products;
+
 
         } catch(error) {
             throw error;
