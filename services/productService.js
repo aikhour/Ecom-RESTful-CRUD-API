@@ -66,4 +66,28 @@ module.exports = class ProductService {
         }
     }
 
+    /**
+     * GET get product from id
+     * @params {Object} data [Product id]
+     * @returns {Object|null} [Product Record]
+     */
+    async getUserById(data) {
+        try {
+
+            const { id } = data;
+            // Check for product record
+            const product = await ProductModelInstance.getProductById(id);
+
+            // If product doesn't exist, reject
+            if(!product) {
+                throw createError(404, 'Product record not found');
+            }
+            // if success, return
+            return product;
+
+        } catch(error) {
+            throw error;
+        }
+    }
+
 }
