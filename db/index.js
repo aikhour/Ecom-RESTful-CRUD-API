@@ -5,7 +5,7 @@ const { DB } = require('../config');
 
 const pool = new Pool({
     user: DB.PGUSER,
-    password: DB.PGDATABASE,
+    password: DB.PGPASSWORD,
     host: DB.PGHOST,
     database: DB.PGDATABASE,
     port: DB.PGPORT,

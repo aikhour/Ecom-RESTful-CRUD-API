@@ -112,6 +112,27 @@ module.exports = class UserService {
             
             // if success
             return user;
+            
+        } catch(error) {
+            throw error;
+        }
+    }
+
+    /**
+     * DELETE delete user by id
+     * @params {Integer} id [User id]
+     * @return {Object|null} [Confirmation of deletion]
+     */
+    async deleteUser(data) {
+        try {
+            // get user id
+            const { id } = data;
+
+            // check for user record, then delete
+            const user = await UserModelInstance.deleteUser(id);
+            // if success
+            return `Deleted user record at id: ${id}`;
+
         } catch(error) {
             throw error;
         }
