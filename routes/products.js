@@ -139,7 +139,7 @@ module.exports = (app) => {
             const data = req.body;
 
             // response from service call
-            const response = await UserServiceInstance.createProduct(data);
+            const response = await ProductServiceInstance.createProduct(data);
 
             // success
             res.status(201).send(response);
