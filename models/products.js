@@ -120,6 +120,33 @@ module.exports = class ProductModel {
         } catch(error) {
             throw new Error(error);
         }
-    }    
+    }
+    
+    /**
+     * DELETE delete product by id
+     * @params {Integer} id [Product id]
+     * @return {Object|null} [Confirmation of deletion]
+     */
+    async deleteProduct(id) {
+        try {
+
+            // generate sql statement
+            const statement = `DELETE FROM product_table WHERE id = $1`;
+            const values = [id];
+
+            // execute statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if(result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }   
 
 }
