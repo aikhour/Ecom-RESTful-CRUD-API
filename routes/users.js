@@ -73,7 +73,7 @@ module.exports = (app) => {
 
 
     /**
-     * PUT update user
+     * PUT update user using req params
      * @params {Object} data [User New Data]
      * @returns {Object|null} [User Record]
      */
@@ -128,7 +128,7 @@ module.exports = (app) => {
             // response from delete call
             const response = await UserServiceInstance.deleteUser({ id: userId });
             // success
-            res.status(204).send(response);
+            res.status(200).send(`User account deleted`);
         } catch(error) {
             next(error);
         }

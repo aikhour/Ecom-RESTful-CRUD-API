@@ -73,10 +73,11 @@ module.exports = class UserModel {
      * @param {String} email [User email]
      * @returns {Object|null} [User record]
      */
+    /*
     async getUserByEmail(email) {
         try {
             // generate SQL statement
-            const statement = `SELECT * FROM users WHERE email = $1`;
+            const statement = `SELECT * FROM user_table WHERE email = $1`;
             const values = [email];
             // execute sql statement
             const result = await db.query(statement, values);
@@ -92,7 +93,7 @@ module.exports = class UserModel {
             throw new Error(error);
         }
     }
-
+    */
     /**
      * GET Get user record by id
      * @param {Integer} id [User ID]
@@ -101,7 +102,7 @@ module.exports = class UserModel {
     async getUserById(id) {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM users WHERE id = $1`;
+            const statement = `SELECT * FROM user_table WHERE id = $1`;
             const values = [id];
 
             // execute sql statement
@@ -127,7 +128,7 @@ module.exports = class UserModel {
     async getAllUsers() {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM users LIMIT 10`;
+            const statement = `SELECT * FROM user_table LIMIT 10`;
 
             // execute sql statement
             const result = await db.query(statement);
@@ -154,7 +155,7 @@ module.exports = class UserModel {
         try {
 
             // generate sql statement
-            const statement = `DELETE FROM users WHERE id = $1`;
+            const statement = `DELETE FROM user_table WHERE id = $1`;
             const values = [id];
 
             // execute statement
