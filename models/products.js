@@ -71,4 +71,28 @@ module.exports = class ProductModel {
     }
     }
 
+    /**
+     * GET Get all products
+     * @return {Object|null} [First 10 product records]
+     */
+    async getAllProducts() {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM product_table LIMIT 10`;
+
+            // execute sql statement
+            const result = await db.query(statement);
+
+            // if success
+            if(result.rows?.length) {
+                return result.rows;
+            }
+            // if unsuccessful
+            return null;
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }   
+
 }
