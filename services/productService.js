@@ -45,4 +45,25 @@ module.exports = class ProductService {
         }
     }    
 
+    /**
+     * GET get all products
+     * @return {Object|null} [First 10 Product records]
+     */
+    async getAllUsers() {
+        try {
+            // check for Product records
+            const products = await ProductModelInstance.getAllProducts();
+
+            // if records dont exist, reject
+            if(!products) {
+                throw createError(404, 'Product records not found');
+            }
+
+            // if success
+            return products;
+        } catch(error) {
+            throw error;
+        }
+    }
+
 }
