@@ -93,6 +93,33 @@ module.exports = class ProductModel {
         } catch(error) {
             throw new Error(error);
         }
-    }   
+    }
+    
+    /**
+     * GET Get product record by id
+     * @param {Integer} id [product ID]
+     * @return {Object|null} [product Record]
+     */
+    async getProductById(id) {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM product_table WHERE id = $1`;
+            const values = [id];
+
+            // execute sql statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }    
 
 }
