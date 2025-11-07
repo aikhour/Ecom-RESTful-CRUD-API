@@ -22,5 +22,27 @@ module.exports = class ProductService {
         } catch(error) {
             throw error;
         }
+    }
+    
+    /**
+     * PUT update product
+     * @params {Object} data [Product New Data]
+     * @returns {Object|null} [Product Record]
+     */
+    async updateProduct(data) {
+
+        try {
+
+            // Check if the Product exists, then update
+            const product = await ProductModelInstance.updateProduct(data);
+
+            // if success
+            return product;
+
+
+        } catch(error) {
+            throw error;
+        }
     }    
+
 }
