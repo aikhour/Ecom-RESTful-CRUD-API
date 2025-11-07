@@ -109,7 +109,7 @@ module.exports = (app) => {
             next(error);
         }
     })
-    // delete user on /users route
+    // delete user on /products route
     router.delete('/', async (req, res, next) => {
         try {
             // get productId
@@ -117,7 +117,7 @@ module.exports = (app) => {
             const productId =  data.id;
 
             // response from delete call
-            const response = await ProductServiceInstance.deleteUser({ id: productId });
+            const response = await ProductServiceInstance.deleteProduct({ id: productId });
             // success
             res.status(200).send(`Product record deleted`);
         } catch(error) {

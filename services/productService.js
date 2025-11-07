@@ -115,4 +115,24 @@ module.exports = class ProductService {
         }
     }
 
+
+    /**
+     * DELETE delete product by id
+     * @params {Integer} id [product id]
+     * @return {Object|null} [Confirmation of deletion]
+     */
+    async deleteProduct(data) {
+        try {
+            // get product id
+            const { id } = data;
+
+            // check for product record, then delete
+            const product = await ProductModelInstance.deleteProduct(id);
+            // if success
+            return product;
+
+        } catch(error) {
+            throw error;
+        }
+    }
 }
