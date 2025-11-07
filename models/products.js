@@ -121,6 +121,33 @@ module.exports = class ProductModel {
             throw new Error(error);
         }
     }
+
+    /**
+     * GET Get product record by category
+     * @param {String} string [product category]
+     * @return {Object|null} [product Record]
+     */
+    async getProductByCategory(string) {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM product_table WHERE category = $1`;
+            const values = [string];
+
+            // execute sql statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if (result.rows?.length) {
+                return result.rows;
+            }
+            // if unsuccessful
+            return null;
+
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }    
     
     /**
      * DELETE delete product by id
