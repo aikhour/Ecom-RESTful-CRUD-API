@@ -131,7 +131,7 @@ module.exports = class UserService {
             // check for user record, then delete
             const user = await UserModelInstance.deleteUser(id);
             // if success
-            return `Deleted user record at id: ${id}`;
+            return user;
 
         } catch(error) {
             throw error;

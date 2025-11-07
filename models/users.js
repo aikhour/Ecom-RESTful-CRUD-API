@@ -11,14 +11,17 @@ module.exports = class UserModel {
    async createUser(data) {
     try {
         // SQL statement - using pg promise helper
-        const statement = pgp.helpers.insert(data, null, 'users') + "RETURNING *";
+        const statement = pgp.helpers.insert(data, null, 'user_table') + "RETURNING *";
 
         // Executes statement
         const result = await db.query(statement);
 
         // returns record if successful
         if(result.rows?.length) {
-            return result.rows[0];
+            return {
+                message: `User [${data.username}] created.`,
+                record: result.rows[0]
+            }
         }
         // returns null if unsuccessful
         return null;
@@ -44,14 +47,17 @@ module.exports = class UserModel {
         // condition for change
         const condition = pgp.as.format('WHERE id = ${id} RETURNING *', {id});
         // change all but user id
-        const statement = pgp.helpers.update(params, null, 'users') + condition;
+        const statement = pgp.helpers.update(params, null, 'user_table') + condition;
         
         // execute statement
         const result = await db.query(statement);
 
         // if successful
         if(result.rows?.length) {
-            return result.rows[0];
+            return {
+                message: `User account [${params.username}] updated.`,
+                record: result.rows[0]
+            }
         }
 
         // if not succcessful
@@ -67,10 +73,11 @@ module.exports = class UserModel {
      * @param {String} email [User email]
      * @returns {Object|null} [User record]
      */
+    /*
     async getUserByEmail(email) {
         try {
             // generate SQL statement
-            const statement = `SELECT * FROM users WHERE email = $1`;
+            const statement = `SELECT * FROM user_table WHERE email = $1`;
             const values = [email];
             // execute sql statement
             const result = await db.query(statement, values);
@@ -86,7 +93,7 @@ module.exports = class UserModel {
             throw new Error(error);
         }
     }
-
+    */
     /**
      * GET Get user record by id
      * @param {Integer} id [User ID]
@@ -95,7 +102,7 @@ module.exports = class UserModel {
     async getUserById(id) {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM users WHERE id = $1`;
+            const statement = `SELECT * FROM user_table WHERE id = $1`;
             const values = [id];
 
             // execute sql statement
@@ -121,7 +128,7 @@ module.exports = class UserModel {
     async getAllUsers() {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM users LIMIT 10`;
+            const statement = `SELECT * FROM user_table LIMIT 10`;
 
             // execute sql statement
             const result = await db.query(statement);
@@ -148,7 +155,7 @@ module.exports = class UserModel {
         try {
 
             // generate sql statement
-            const statement = `DELETE FROM users WHERE id = $1`;
+            const statement = `DELETE FROM user_table WHERE id = $1`;
             const values = [id];
 
             // execute statement

@@ -73,7 +73,7 @@ module.exports = (app) => {
 
 
     /**
-     * PUT update user
+     * PUT update user using req params
      * @params {Object} data [User New Data]
      * @returns {Object|null} [User Record]
      */
@@ -84,6 +84,25 @@ module.exports = (app) => {
             // get userId and data
             const { userId } = req.params;
             const data = req.body;
+
+            // response from service call
+            const response = await UserServiceInstance.updateUser({ id: userId, ...data});
+            // success
+            res.status(200).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+
+    })
+    // PUT on /users route
+    router.put('/', async (req, res, next) => {
+        
+
+        try {
+            // get userId and data
+            const data = req.body;
+            const userId = data.id;
 
             // response from service call
             const response = await UserServiceInstance.updateUser({ id: userId, ...data});
@@ -109,17 +128,51 @@ module.exports = (app) => {
             // response from delete call
             const response = await UserServiceInstance.deleteUser({ id: userId });
             // success
-            res.status(204).send(response);
+            res.status(200).send(`User account deleted`);
         } catch(error) {
             next(error);
         }
     })
+    // delete user on /users route
+    router.delete('/', async (req, res, next) => {
+        try {
+            // get userId
+            const data = req.body;
+            const userId =  data.id;
+
+            // response from delete call
+            const response = await UserServiceInstance.deleteUser({ id: userId });
+            // success
+            res.status(200).send(`User account deleted`);
+        } catch(error) {
+            next(error);
+        }
+    })
+
+    // user registering / create users
+
 
     /**
      * POST create user
      * @params {Object} data [New User Data]
      * @returns {Object|null} [New User Record]
      */
+    app.post('/register', async (req, res, next) => {
+        try {
+            // get data
+            const data = req.body;
+
+            // response from service call
+            const response = await UserServiceInstance.createUser(data);
+
+            // success
+            res.status(201).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+    })
+    // post on /users route
     router.post('/', async (req, res, next) => {
         try {
             // get data
