@@ -172,5 +172,21 @@ module.exports = (app) => {
             next(error);
         }
     })
+    // post on /users route
+    router.post('/', async (req, res, next) => {
+        try {
+            // get data
+            const data = req.body;
+
+            // response from service call
+            const response = await UserServiceInstance.createUser(data);
+
+            // success
+            res.status(201).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+    })
 }
 
