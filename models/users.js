@@ -11,14 +11,17 @@ module.exports = class UserModel {
    async createUser(data) {
     try {
         // SQL statement - using pg promise helper
-        const statement = pgp.helpers.insert(data, null, 'users') + "RETURNING *";
+        const statement = pgp.helpers.insert(data, null, 'user_table') + "RETURNING *";
 
         // Executes statement
         const result = await db.query(statement);
 
         // returns record if successful
         if(result.rows?.length) {
-            return result.rows[0];
+            return {
+                message: `User record created.`,
+                record: result.rows[0]
+            }
         }
         // returns null if unsuccessful
         return null;
