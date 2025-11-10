@@ -6,9 +6,6 @@ const AuthService = require('../services/authService');
 const AuthServiceInstance = new AuthService();
 
 module.exports = (app, passport) => {
-
-  app.use('/', router);
-
   // Registration Endpoint
   app.post('/register', async (req, res, next) => {
   
@@ -24,11 +21,11 @@ module.exports = (app, passport) => {
   });
   
   // Login Endpoint
-  app.post('/login', passport.authenticate('local'), async (req, res, next) => {
+  app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), async (req, res, next) => {
     try {
-      const { username, password } = req.body;
+      const { email, password } = req.body;
     
-      const response = await AuthServiceInstance.login({ email: username, password});
+      const response = await AuthServiceInstance.login({ email: email, password});
     
       res.status(200).send(response);
     } catch(err) {

@@ -9,7 +9,7 @@ module.exports = (app, passport) => {
     productRouter(app);
     cartRouter(app);
     orderRouter(app);
-    authRouter(app);
+    authRouter(app, passport);
 }
 
 

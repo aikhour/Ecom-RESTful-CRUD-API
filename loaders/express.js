@@ -15,6 +15,9 @@ module.exports = (app) => {
     // parses urlencoded bodies
     app.use(bodyParser.urlencoded({ extended: true }));
 
+      // 
+    app.set('trust proxy', 1);
+
     // creates a session
     app.use(
         session({
