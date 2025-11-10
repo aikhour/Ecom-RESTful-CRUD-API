@@ -73,7 +73,7 @@ module.exports = class UserModel {
      * @param {String} email [User email]
      * @returns {Object|null} [User record]
      */
-    /*
+    
     async getUserByEmail(email) {
         try {
             // generate SQL statement
@@ -93,7 +93,7 @@ module.exports = class UserModel {
             throw new Error(error);
         }
     }
-    */
+    
     /**
      * GET Get user record by id
      * @param {Integer} id [User ID]
