@@ -1,4 +1,9 @@
-# An Ecommerce CRUD API abdiing by RESTful standards
-Date started: 6.11.25
+# An Ecommerce RESTful API
+This API applies HTTP methods to CRUD operations on a postgresql database. Completely headless, so the use of a HTTP request maker like Postman is recommended.
 
-Uses application of models, dotenv and API endpoints as practice for the developer.
+This project does NOT yet include the SQL statements for setup.
+
+Date started: 6.11.25
+Last updated: 10.11.25
+
+This project is API creation practice for the developer.
