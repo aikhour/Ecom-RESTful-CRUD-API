@@ -123,15 +123,15 @@ module.exports = class CartModel {
     }
 
     /**
-     * GET Get cart record by username
-     * @param {String} username [cart username]
+     * GET Get cart record by user id
+     * @param {int} user_id [cart user id]
      * @return {Object|null} [cart Record]
      */
-    async getCartById(username) {
+    async getCartByUserId(user_id) {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM cart_table WHERE username = $1`;
-            const values = [username];
+            const statement = `SELECT * FROM cart_table WHERE user_id = $1`;
+            const values = [user_id];
 
             // execute sql statement
             const result = await db.query(statement, values);
