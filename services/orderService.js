@@ -58,7 +58,7 @@ module.exports = class OrderService {
      * GET get all orders
      * @return {Object|null} [First 10 order records]
      */
-    async getAllOrder() {
+    async getAllOrders() {
         try {
             // check for order records
             const users = await OrderModelInstance.getAllOrders();
