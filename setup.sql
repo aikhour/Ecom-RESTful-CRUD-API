@@ -14,3 +14,11 @@ CREATE TABLE product_table (
     description varchar(20),
     category varchar(10) NOT NULL
 );
+
+CREATE TABLE cart_table (
+	id int primary key,
+	quantity int NOT NULL,
+	total float,
+	product_id int references product_table (id),
+	user_id int references user_table (id)
+);
