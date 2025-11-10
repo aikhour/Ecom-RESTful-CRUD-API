@@ -50,8 +50,8 @@ module.exports = (app) => {
 
     /**
      * PUT update order using req params
-     * @params {Object} data [User New Data]
-     * @returns {Object|null} [User Record]
+     * @params {Object} data [order New Data]
+     * @returns {Object|null} [order Record]
      */
     router.put('/:orderId', async (req, res, next) => {
         
