@@ -76,7 +76,7 @@ module.exports = class CartService {
     }
 
     /**
-     * PUT update card
+     * PUT update cart record
      * @params {Object} data [Cart New Data]
      * @returns {Object|null} [Cart Record]
      */

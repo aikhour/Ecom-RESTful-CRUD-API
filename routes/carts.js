@@ -6,7 +6,7 @@ const CartServiceInstance = new CartService();
 
 module.exports = (app) => {
     // applying cart route
-    app.use('/cart', router);
+    app.use('/carts', router);
 
     /** GET get cart from id
      * @params {Object} data [cart id]
@@ -27,7 +27,6 @@ module.exports = (app) => {
             next(error);
         }
     });
-    
     
     /**
      * GET get all carts
@@ -53,6 +52,7 @@ module.exports = (app) => {
      * @params {Object} data [cart New Data]
      * @returns {Object|null} [cart Record]
      */
+    
     router.put('/:cartId', async (req, res, next) => {
         
 
@@ -109,7 +109,7 @@ module.exports = (app) => {
             next(error);
         }
     })
-    // delete user on /cart route
+    // delete user on /carts route
     router.delete('/', async (req, res, next) => {
         try {
             // get cartId
