@@ -19,7 +19,7 @@ module.exports = class OrderModel {
         // returns record if successful
         if(result.rows?.length) {
             return {
-                message: `User [${data.username}] created.`,
+                message: `Order for user: [${data.user_id}] created.`,
                 record: result.rows[0]
             }
         }
@@ -34,11 +34,11 @@ module.exports = class OrderModel {
 
 
     /**
-     * PUT Updates a user record
-     * @param {Object} data [User data]
-     * @returns {Object|null} [User record created]
+     * PUT Updates an order
+     * @param {Object} data [order data]
+     * @returns {Object|null} [order record created]
      */
-    async updateUser(data) {
+    async updateOrder(data) {
         try {  
         // extract id and params from data
         const { id, ...params } = data;
@@ -46,8 +46,8 @@ module.exports = class OrderModel {
         // Generate SQL statements - pgp helper funcs
         // condition for change
         const condition = pgp.as.format('WHERE id = ${id} RETURNING *', {id});
-        // change all but user id
-        const statement = pgp.helpers.update(params, null, 'user_table') + condition;
+        // change all but order id
+        const statement = pgp.helpers.update(params, null, 'order_table') + condition;
         
         // execute statement
         const result = await db.query(statement);
@@ -55,7 +55,7 @@ module.exports = class OrderModel {
         // if successful
         if(result.rows?.length) {
             return {
-                message: `User account [${params.username}] updated.`,
+                message: `Order for user: [${params.user_id}] updated.`,
                 record: result.rows[0]
             }
         }
@@ -69,40 +69,14 @@ module.exports = class OrderModel {
     }
 
     /**
-     * GET Get user record by email
-     * @param {String} email [User email]
-     * @returns {Object|null} [User record]
+     * GET Get order record by id
+     * @param {Integer} id [Order ID]
+     * @return {Object|null} [Order Record]
      */
-    /*
-    async getUserByEmail(email) {
-        try {
-            // generate SQL statement
-            const statement = `SELECT * FROM user_table WHERE email = $1`;
-            const values = [email];
-            // execute sql statement
-            const result = await db.query(statement, values);
-
-            // if success
-            if(result.rows?.length) {
-                return result.rows[0];
-            }
-            // if unsuccessful
-            return null;
-
-        } catch(error) {
-            throw new Error(error);
-        }
-    }
-    */
-    /**
-     * GET Get user record by id
-     * @param {Integer} id [User ID]
-     * @return {Object|null} [User Record]
-     */
-    async getUserById(id) {
+    async getOrderById(id) {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM user_table WHERE id = $1`;
+            const statement = `SELECT * FROM order_table WHERE id = $1`;
             const values = [id];
 
             // execute sql statement
@@ -122,13 +96,13 @@ module.exports = class OrderModel {
     }
 
     /**
-     * GET Get all users
-     * @return {Object|null} [First 10 User Records]
+     * GET Get all orders
+     * @return {Object|null} [First 10 Order Records]
      */
-    async getAllUsers() {
+    async getAllOrders() {
         try {
             // generate sql statement
-            const statement = `SELECT * FROM user_table LIMIT 10`;
+            const statement = `SELECT * FROM order_table LIMIT 10`;
 
             // execute sql statement
             const result = await db.query(statement);
@@ -147,15 +121,15 @@ module.exports = class OrderModel {
 
 
     /**
-     * DELETE delete user by id
-     * @params {Integer} id [User id]
+     * DELETE delete order by id
+     * @params {Integer} id [Order id]
      * @return {Object|null} [Confirmation of deletion]
      */
-    async deleteUser(id) {
+    async deleteOrder(id) {
         try {
 
             // generate sql statement
-            const statement = `DELETE FROM user_table WHERE id = $1`;
+            const statement = `DELETE FROM order_table WHERE id = $1`;
             const values = [id];
 
             // execute statement
