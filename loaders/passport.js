@@ -12,12 +12,20 @@ module.exports = (app) => {
   
   // Set method to serialize data to store in cookie
   passport.serializeUser((user, done) => {
-    done(null, user.id);
+    process.nextTick(function() {
+      return done(null, {
+        id: user.id,
+        email: user.email,
+        password: user.password
+      });
+    });
   });
   
   // Set method to deserialize data stored in cookie and attach to req.user
-  passport.deserializeUser((id, done) => {
-    done(null, { id });
+  passport.deserializeUser((user, done) => {
+    process.nextTick(function() {
+      return done(null, user);
+    });
   });
 
   // Configure local strategy to be use for local login
