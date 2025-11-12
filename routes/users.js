@@ -34,8 +34,8 @@ module.exports = (app) => {
      * @returns {Object|null} [User record]
      */
 
-    /*
-    router.get('/:userEmail', async (req, res, next) => {
+    
+    app.get('/email/:userEmail', async (req, res, next) => {
 
         try {
             // userEmail from params
@@ -50,7 +50,7 @@ module.exports = (app) => {
             next(error);
         }
     });
-    */
+    
     
     
     /**
@@ -149,29 +149,6 @@ module.exports = (app) => {
         }
     })
 
-    // user registering / create users
-
-
-    /**
-     * POST create user
-     * @params {Object} data [New User Data]
-     * @returns {Object|null} [New User Record]
-     */
-    app.post('/register', async (req, res, next) => {
-        try {
-            // get data
-            const data = req.body;
-
-            // response from service call
-            const response = await UserServiceInstance.createUser(data);
-
-            // success
-            res.status(201).send(response);
-
-        } catch(error) {
-            next(error);
-        }
-    })
     // post on /users route
     router.post('/', async (req, res, next) => {
         try {
