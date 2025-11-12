@@ -22,9 +22,12 @@ module.exports = (app) => {
 
   // Configure local strategy to be use for local login
   passport.use(new LocalStrategy(
-    async (username, password, done) => {
+    { usernameField: "email"}, async (username, password, done) => {
       try {
-        const user = await AuthServiceInstance.login({ email: username, password });
+        const user = await AuthServiceInstance.login({
+          email: username,
+          password: password
+        });
         return done(null, user);
       } catch(err) {
         return done(err);

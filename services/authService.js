@@ -39,7 +39,7 @@ module.exports = class AuthService {
 
             // Check for matching passwords
             if (user.password !== password) {
-                throw createError(401, 'Incorrect username or password');
+                throw createError(401, 'Invalid credentials');
             }
 
             return user;

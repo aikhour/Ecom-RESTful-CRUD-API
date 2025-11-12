@@ -84,7 +84,7 @@ module.exports = class UserModel {
 
             // if success
             if(result.rows?.length) {
-                return result.rows;
+                return result.rows[0];
             }
             // if unsuccessful
             return null;

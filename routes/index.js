@@ -5,11 +5,11 @@ const orderRouter = require('./orders');
 const authRouter = require('./auth');
 
 module.exports = (app, passport) => {
-    userRouter(app, passport);
+    authRouter(app, passport);
+    userRouter(app);
     productRouter(app);
     cartRouter(app);
     orderRouter(app);
-    authRouter(app, passport);
 }
 
 
