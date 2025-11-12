@@ -34,8 +34,8 @@ module.exports = (app) => {
      * @returns {Object|null} [User record]
      */
 
-    /*
-    router.get('/:userEmail', async (req, res, next) => {
+    
+    app.get('/email/:userEmail', async (req, res, next) => {
 
         try {
             // userEmail from params
@@ -50,7 +50,7 @@ module.exports = (app) => {
             next(error);
         }
     });
-    */
+    
     
     
     /**

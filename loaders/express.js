@@ -3,7 +3,6 @@ const cors = require('cors');
 const session = require('express-session');
 const { SESSION_SECRET } = require('../config');
 
-
 module.exports = (app) => {
 
     // enable cross origin resource sharing to all origins by default

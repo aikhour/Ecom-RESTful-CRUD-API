@@ -1,4 +1,5 @@
 // connect express server to postgreSQL
+"use strict";
 
 const { Pool } = require('pg');
 const { DB } = require('../config');

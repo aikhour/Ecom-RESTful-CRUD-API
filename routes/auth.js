@@ -21,11 +21,12 @@ module.exports = (app, passport) => {
   });
   
   // Login Endpoint
-  app.post('/login', passport.authenticate('local', { failureRedirect: '/login'}), async (req, res, next) => {
+  app.post('/login', passport.authenticate('local'), async (req, res, next) => {
     try {
       const { email, password } = req.body;
+      
     
-      const response = await AuthServiceInstance.login({ email: email, password});
+      const response = await AuthServiceInstance.login({ email: email, password: password});
     
       res.status(200).send(response);
     } catch(err) {

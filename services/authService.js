@@ -1,5 +1,5 @@
 const createError = require('http-errors');
-const UserModel  = require('../models/users');
+const UserModel = require('../models/users');
 const UserModelInstance = new UserModel();
 
 module.exports = class AuthService {
@@ -21,22 +21,24 @@ module.exports = class AuthService {
         } catch(error) {
             throw createError(500, error);
         }
-    }
+    };
     
     // login to user
     async login(data) {
+    
         const { email, password } = data;
 
         try {
             // check if user exists
             const user = await UserModelInstance.getUserByEmail(email);
 
-            // if no user, reject
-            if(!user) {
-                throw createError(401, 'Incorrect username or password');
+            // If no user found, reject
+            if (!user) {
+                throw createError(401, 'User record not found');
             }
-            // check password match
-            if(user.password !== password) {
+
+            // Check for matching passwords
+            if (user.password !== password) {
                 throw createError(401, 'Incorrect username or password');
             }
 
@@ -45,6 +47,6 @@ module.exports = class AuthService {
         } catch(error) {
             throw createError(500, error);
         }
-    }
+    };
 
 }
