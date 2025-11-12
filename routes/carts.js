@@ -13,11 +13,10 @@ module.exports = (app) => {
     // POST - make new empty cart for user
     router.post('/', async (req, res, next) => {
         try {
-            // get user id and data
-            const { id } = req.user;
-            const data = req.body;
+            // get user id
+            const userId = req.user.id;
             // request new cart
-            const response = await CartServiceInstance.createCart(id);
+            const response = await CartServiceInstance.createCart(userId);
 
             // success
             res.status(201).send(response);
@@ -43,6 +42,8 @@ module.exports = (app) => {
         }
     });
     
+
+
     // test route
     router.get('/a', async (req, res, next) => {
         try {
@@ -55,7 +56,5 @@ module.exports = (app) => {
             next(error);
         }
     });
-
-    
 }
 

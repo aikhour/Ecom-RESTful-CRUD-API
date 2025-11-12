@@ -107,6 +107,7 @@ module.exports = class CartService {
             // Check for cart record, otherwise creates new one
             const user = await CartModelInstance.createCart(userId);
             
+            
             // if success
             return user;
             

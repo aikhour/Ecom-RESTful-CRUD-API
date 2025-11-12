@@ -11,10 +11,10 @@ module.exports = class DBHelper {
             // execute statement
             const result = await db.query(statement);
             // if successful
-            return parseInt(result.rows[0].count);
+            const number = await parseInt(result.rows[0].count)
+            return number;
             
-            
-
+        
         } catch(error) {
             throw error;
         }
@@ -26,7 +26,7 @@ module.exports = class DBHelper {
             // run idCounter from above
             const result = await this.idCounter(table);
             // add one
-            const newId = result + 1;
+            const newId = parseInt(result + 1);
             return newId;
             
         } catch(error) {

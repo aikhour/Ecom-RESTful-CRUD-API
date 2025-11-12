@@ -8,7 +8,7 @@ module.exports = class CartModel {
 
     /**
      * POST Create new user cart (empty)
-     * @params {Object} data [Cart record]
+     * @params {Integer} data [Cart record]
      * @return {Object|null} [Created cart]
      */
     async createCart(userId) {
@@ -17,9 +17,27 @@ module.exports = class CartModel {
             const uniqueId = DBHInstance.idMaker('cart_table');
             // new cart object
             const cart = { id: uniqueId, user_id: userId };
+            
+
+
+
+
+
+
+            /// BUG FIX THIS STATEMENT - SYNTAX ERROR
+
 
             // generate create record statement
             const statement = pgp.helpers.insert(cart, null, 'cart_table') + `RETURNING *`;
+
+
+
+
+
+
+
+
+
             // execute statement
             const result = await db.query(statement);
 
