@@ -163,7 +163,7 @@ module.exports = class UserModel {
 
             // if success
             if(result.rows?.length) {
-                return result.rows[0];
+                return `User account deleted.`;
             }
             // if unsuccessful
             return null;

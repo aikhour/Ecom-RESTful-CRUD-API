@@ -28,7 +28,6 @@ module.exports = (app) => {
     // PUT - update current user's profile
     router.put('/', async (req, res, next) => {
         try {
-            console.log(req.user);
             // get userId and data
             const data = req.body;
             const userId = req.user.id;
@@ -44,7 +43,19 @@ module.exports = (app) => {
 
     })
 
+    // DELETE - delete current user's profile
+    router.delete('/', async (req, res, next) => {
+        try {
+            // get user id
+            const userId = req.user.id;
+            // response from service call
+            const response = await UserServiceInstance.deleteUser({  id: userId });
 
+            res.status(200).send(response);
+        } catch(error) {
+            next(error);
+        }
+    })
 
 
 }
