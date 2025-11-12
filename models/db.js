@@ -9,9 +9,11 @@ module.exports = class DBHelper {
             // generate statement
             const statement = `SELECT COUNT(*) FROM ${table}`;
             // execute statement
-            const result = db.query(statement);
+            const result = await db.query(statement);
             // if successful
-            return result;
+            return parseInt(result.rows[0].count);
+            
+            
 
         } catch(error) {
             throw error;
@@ -22,7 +24,7 @@ module.exports = class DBHelper {
     async idMaker(table) {
         try {
             // run idCounter from above
-            const result = this.idCounter();
+            const result = await this.idCounter(table);
             // add one
             const newId = result + 1;
             return newId;

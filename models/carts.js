@@ -1,27 +1,32 @@
 const db = require('../db');
 const pgp = require('pg-promise')({ capSQL: true });
 
+const DBHelper = require('./db');
+const DBHInstance = new DBHelper();
+
 module.exports = class CartModel {
 
     /**
-     * POST Create new cart record
+     * POST Create new user cart (empty)
      * @params {Object} data [Cart record]
      * @return {Object|null} [Created cart]
      */
-    async createCart(data) {
+    async createCart(userId) {
         try {
-            const { id } = data;
-
+            // get new cart id
+            const uniqueId = DBHInstance.idMaker('cart_table');
+            // new cart object
+            const cart = { id: uniqueId, user_id: userId };
 
             // generate create record statement
-            const statement = pgp.helpers.insert(data, null, 'cart_table') + `RETURNING *`;
+            const statement = pgp.helpers.insert(cart, null, 'cart_table') + `RETURNING *`;
             // execute statement
             const result = await db.query(statement);
 
             // return result if successful
             if(result.rows?.length) {
                 return {
-                    message: `Cart created with id: ${id}`,
+                    message: `User [${req.user.email}] cart created with id [${uniqueId}]`,
                     record: result.rows[0]
                 }
             }
