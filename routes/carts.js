@@ -41,20 +41,24 @@ module.exports = (app) => {
             next(error);
         }
     });
-    
 
-
-    // test route
-    router.get('/a', async (req, res, next) => {
+    // PUT - update current user cart
+    router.put('/', async (req, res, next) => {
         try {
-            const response = await DBH.idMaker('cart_table');
+            // get userId and data
+            const userId = req.user.id;
+            const data = req.body;
+            // get cart associated with userId
 
+            // response from service call
+            const response = await CartServiceInstance.updateCart({ id: cartId, ...data});
             // success
             res.status(200).send(response);
 
         } catch(error) {
             next(error);
         }
-    });
+
+    })
 }
 

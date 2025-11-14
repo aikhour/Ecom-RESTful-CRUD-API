@@ -14,29 +14,12 @@ module.exports = class CartModel {
     async createCart(userId) {
         try {
             // get new cart id
-            const uniqueId = DBHInstance.idMaker('cart_table');
+            const uniqueId = await DBHInstance.idMaker('cart_table');
             // new cart object
             const cart = { id: uniqueId, user_id: userId };
             
-
-
-
-
-
-
-            /// BUG FIX THIS STATEMENT - SYNTAX ERROR
-
-
             // generate create record statement
             const statement = pgp.helpers.insert(cart, null, 'cart_table') + `RETURNING *`;
-
-
-
-
-
-
-
-
 
             // execute statement
             const result = await db.query(statement);
@@ -44,7 +27,7 @@ module.exports = class CartModel {
             // return result if successful
             if(result.rows?.length) {
                 return {
-                    message: `User [${req.user.email}] cart created with id [${uniqueId}]`,
+                    message: `User cart created with id [${uniqueId}]`,
                     record: result.rows[0]
                 }
             }
