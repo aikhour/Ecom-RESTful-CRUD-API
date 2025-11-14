@@ -120,10 +120,8 @@ module.exports = class OrderService {
      * @params {Integer} id [order id]
      * @return {Object|null} [Confirmation of deletion]
      */
-    async deleteOrder(data) {
+    async deleteOrder(id) {
         try {
-            // get order id
-            const { id } = data;
 
             // check for order record, then delete
             const order = await OrderModelInstance.deleteOrder(id);
