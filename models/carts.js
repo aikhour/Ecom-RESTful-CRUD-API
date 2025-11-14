@@ -1,27 +1,38 @@
 const db = require('../db');
 const pgp = require('pg-promise')({ capSQL: true });
 
+const DBHelper = require('./db');
+const DBHInstance = new DBHelper();
+
 module.exports = class CartModel {
 
     /**
-     * POST Create new cart record
-     * @params {Object} data [Cart record]
+     * POST Create new user cart (empty)
+     * @params {Integer} data [Cart record]
      * @return {Object|null} [Created cart]
      */
-    async createCart(data) {
+    async createCart(userId) {
         try {
-            const { id } = data;
+            // get new cart id
+            const ownCart = await this.getCartByUserId(userId);
+            if(ownCart) {
+                throw new Error('User already has a cart');
+            }
 
-
+            const uniqueId = await DBHInstance.idMaker('cart_table');
+            // new cart object
+            const cart = { id: uniqueId, user_id: userId, quantity: 0};
+            
             // generate create record statement
-            const statement = pgp.helpers.insert(data, null, 'cart_table') + `RETURNING *`;
+            const statement = pgp.helpers.insert(cart, null, 'cart_table') + `RETURNING *`;
+
             // execute statement
             const result = await db.query(statement);
 
             // return result if successful
             if(result.rows?.length) {
                 return {
-                    message: `Cart created with id: ${id}`,
+                    message: `User cart created with id [${uniqueId}]`,
                     record: result.rows[0]
                 }
             }
@@ -43,29 +54,29 @@ module.exports = class CartModel {
      */
     async updateCart(data) {
     try {  
-    // extract id and params from data
-    const { id, ...params } = data;
-    
-    // Generate SQL statements - pgp helper funcs
-    // condition for change
-    const condition = pgp.as.format('WHERE id = ${id} RETURNING *', {id});
-    // change all but user id
-    const statement = pgp.helpers.update(params, null, 'cart_table') + condition;
-            
-    // execute statement
-    const result = await db.query(statement);
-    
-    // if successful
-    if(result.rows?.length) {
-        return {
-            message: `Cart with id: ${id} updated.`,
-            record: result.rows[0]
+        // extract id and params from data
+        const { id, ...params } = data;
+        
+        // Generate SQL statements - pgp helper funcs
+        // condition for change
+        const condition = await pgp.as.format(' WHERE id = ${id} RETURNING *', {id});
+        // change all but user id
+        const statement = await pgp.helpers.update(params, null, 'cart_table') + condition;
+                
+        // execute statement
+        const result = await db.query(statement);
+        
+        // if successful
+        if(result.rows?.length) {
+            return {
+                message: `Cart with id: ${id} updated.`,
+                record: result.rows[0]
+            }
         }
-    }
-    
-    // if not succcessful
-    return null;        
-    
+        
+        // if not succcessful
+        return null;        
+        
     } catch(error) {
         throw new Error(error);
     }

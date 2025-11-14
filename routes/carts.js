@@ -1,87 +1,61 @@
 const express = require('express');
 const router = express.Router();
 const CartService = require('../services/cartService');
-
 const CartServiceInstance = new CartService();
+
+const DBHelper = require('../models/db');
+const DBH = new DBHelper();
 
 module.exports = (app) => {
     // applying cart route
-    app.use('/carts', router);
+    app.use('/cart', router);
 
-    /** GET get cart from id
-     * @params {Object} data [cart id]
-     * @returns {Object|null} [cart Record]
-     */
-    router.get('/:cartId', async (req, res, next) => {
-
+    // POST - make new empty cart for user
+    router.post('/', async (req, res, next) => {
         try {
-            // cartid from params
-            const { cartId } = req.params;
+            // get user id
+            const userId = req.user.id;
+            // request new cart
+            const response = await CartServiceInstance.createCart(userId);
 
-            // response from service call
-            const response = await CartServiceInstance.getCartById({ id: cartId });
-            // success + return the object
+            // success
+            res.status(201).send(response);
+
+        } catch(error) {
+            next(error);
+        }
+    });
+
+    // GET - get current user carts
+    router.get('/', async (req, res, next) => {
+        try {
+            // get user id
+            const { id } = req.user;
+            // request cart records
+            const response = await CartServiceInstance.getCartByUserId(id);
+
+            // success
             res.status(200).send(response);
 
         } catch(error) {
             next(error);
         }
     });
-    
-    /**
-     * GET get all carts
-     * @return {Object|null} [First 10 cart records]
-     */
-    
-    router.get('/', async (req, res, next) => {
 
-        try {
-            // response from service call
-            const response = await CartServiceInstance.getAllCarts()
-            // success + return the object
-            res.status(200).send(response);
-        } catch(error) {
-            next(error);
-        }
-    })
-    
-
-
-    /**
-     * PUT update cart using req params
-     * @params {Object} data [cart New Data]
-     * @returns {Object|null} [cart Record]
-     */
-    
-    router.put('/:cartId', async (req, res, next) => {
-        
-
-        try {
-            // get cartId and data
-            const { cartId } = req.params;
-            const data = req.body;
-
-            // response from service call
-            const response = await CartServiceInstance.updateCart({ id: cartId, ...data});
-            // success
-            res.status(200).send(response);
-
-        } catch(error) {
-            next(error);
-        }
-
-    })
-    // PUT on /cart route
+    // PUT - update current user cart
     router.put('/', async (req, res, next) => {
-        
-
         try {
-            // get cartId and data
+            // get userId and data
+            const userId = req.user.id;
             const data = req.body;
-            const cartId = data.id;
-
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
+            // add cartId to data
+            const newCart = {id: cartId, ...data};
+            
             // response from service call
-            const response = await CartServiceInstance.updateCart({ id: cartId, ...data});
+            const response = await CartServiceInstance.updateCart(newCart);
             // success
             res.status(200).send(response);
 
@@ -91,59 +65,19 @@ module.exports = (app) => {
 
     })
 
-    /**
-     * DELETE delete cartt by id
-     * @params {Integer} id [cart id]
-     * @return {Object|null} [Confirmation of deletion]
-     */
-    router.delete('/:cartId', async (req, res, next) => {
-        try {
-            // get cartId
-            const { cartId } = req.params;
-
-            // response from delete call
-            const response = await CartServiceInstance.deleteCart({ id: cartId });
-            // success
-            res.status(200).send(`Cart deleted`);
-        } catch(error) {
-            next(error);
-        }
-    })
-    // delete user on /carts route
+    // DELETE - delete current user cart
     router.delete('/', async (req, res, next) => {
         try {
-            // get cartId
-            const data = req.body;
-            const cartId =  data.id;
+            // get userId
+            const userId = req.user.id;
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
 
             // response from delete call
             const response = await CartServiceInstance.deleteCart({ id: cartId });
             // success
             res.status(200).send(`Cart deleted`);
-        } catch(error) {
-            next(error);
-        }
-    })
-
-    // creating cart records
-
-
-    /**
-     * POST create cart
-     * @params {Object} data [New cart Data]
-     * @returns {Object|null} [New cart Record]
-     */
-    router.post('/', async (req, res, next) => {
-        try {
-            // get data
-            const data = req.body;
-
-            // response from service call
-            const response = await CartServiceInstance.createCart(data);
-
-            // success
-            res.status(201).send(response);
-
         } catch(error) {
             next(error);
         }
