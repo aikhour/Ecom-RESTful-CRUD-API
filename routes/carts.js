@@ -48,10 +48,15 @@ module.exports = (app) => {
             // get userId and data
             const userId = req.user.id;
             const data = req.body;
-            // get cart associated with userId
-
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
+            // add cartId to data
+            const newCart = {id: cartId, ...data};
+            console.log(newCart);
+            
             // response from service call
-            const response = await CartServiceInstance.updateCart({ id: cartId, ...data});
+            const response = await CartServiceInstance.updateCart(newCart);
             // success
             res.status(200).send(response);
 

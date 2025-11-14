@@ -49,29 +49,29 @@ module.exports = class CartModel {
      */
     async updateCart(data) {
     try {  
-    // extract id and params from data
-    const { id, ...params } = data;
-    
-    // Generate SQL statements - pgp helper funcs
-    // condition for change
-    const condition = pgp.as.format('WHERE id = ${id} RETURNING *', {id});
-    // change all but user id
-    const statement = pgp.helpers.update(params, null, 'cart_table') + condition;
-            
-    // execute statement
-    const result = await db.query(statement);
-    
-    // if successful
-    if(result.rows?.length) {
-        return {
-            message: `Cart with id: ${id} updated.`,
-            record: result.rows[0]
+        // extract id and params from data
+        const { id, ...params } = data;
+        
+        // Generate SQL statements - pgp helper funcs
+        // condition for change
+        const condition = await pgp.as.format(' WHERE id = ${id} RETURNING *', {id});
+        // change all but user id
+        const statement = await pgp.helpers.update(params, null, 'cart_table') + condition;
+                
+        // execute statement
+        const result = await db.query(statement);
+        
+        // if successful
+        if(result.rows?.length) {
+            return {
+                message: `Cart with id: ${id} updated.`,
+                record: result.rows[0]
+            }
         }
-    }
-    
-    // if not succcessful
-    return null;        
-    
+        
+        // if not succcessful
+        return null;        
+        
     } catch(error) {
         throw new Error(error);
     }
