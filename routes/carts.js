@@ -53,7 +53,6 @@ module.exports = (app) => {
             const cartId = cart.id;
             // add cartId to data
             const newCart = {id: cartId, ...data};
-            console.log(newCart);
             
             // response from service call
             const response = await CartServiceInstance.updateCart(newCart);
@@ -64,6 +63,24 @@ module.exports = (app) => {
             next(error);
         }
 
+    })
+
+    // DELETE - delete current user cart
+    router.delete('/', async (req, res, next) => {
+        try {
+            // get userId
+            const userId = req.user.id;
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
+
+            // response from delete call
+            const response = await CartServiceInstance.deleteCart({ id: cartId });
+            // success
+            res.status(200).send(`Cart deleted`);
+        } catch(error) {
+            next(error);
+        }
     })
 }
 
