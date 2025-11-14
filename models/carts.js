@@ -14,9 +14,14 @@ module.exports = class CartModel {
     async createCart(userId) {
         try {
             // get new cart id
+            const ownCart = await this.getCartByUserId(userId);
+            if(ownCart) {
+                throw new Error('User already has a cart');
+            }
+
             const uniqueId = await DBHInstance.idMaker('cart_table');
             // new cart object
-            const cart = { id: uniqueId, user_id: userId };
+            const cart = { id: uniqueId, user_id: userId, quantity: 0};
             
             // generate create record statement
             const statement = pgp.helpers.insert(cart, null, 'cart_table') + `RETURNING *`;
