@@ -33,4 +33,41 @@ module.exports = class DBHelper {
             throw error;
         }
     }
+
+    // get current date
+    async getCurrentDate() {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = dd + '/' + mm + '/' + yyyy;
+        return today;
+    }
+
+    // calculate order price
+    async calcPrice(productId, quantity) {
+        try {
+            // statements
+            const condition = await pgp.as.format(' WHERE id = ${productId}', {productId});
+            const statement = `SELECT price FROM product_table` + condition;
+
+            // execute statement
+            const response = await db.query(statement);
+            const price = response.rows[0].price;
+            if(price) {
+                // calculate total
+                const total = price * quantity;
+                return total;
+            }
+            
+            // if no return
+            return null;
+
+        } catch(error) {
+            throw error;
+        }
+        
+       
+    }
 }
