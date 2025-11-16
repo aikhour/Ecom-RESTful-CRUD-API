@@ -10,6 +10,19 @@ module.exports = (app) => {
     // applying cart route
     app.use('/cart', router);
 
+    /**
+     * @swagger
+     * /cart:
+     *   post:
+     *     tags:
+     *       - Carts
+     *     description: Creates a new cart for the user
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: Successfully created
+     */
     // POST - make new empty cart for user
     router.post('/', async (req, res, next) => {
         try {
@@ -26,6 +39,22 @@ module.exports = (app) => {
         }
     });
 
+
+    /**
+     * @swagger
+     * /cart:
+     *   get:
+     *     tags:
+     *       - Carts
+     *     description: Returns the user cart
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: The current user cart
+     *         schema:
+     *           $ref: '#/definitions/Cart'
+     */
     // GET - get current user carts
     router.get('/', async (req, res, next) => {
         try {
@@ -42,6 +71,17 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * @swagger
+     * /cart:
+     *   put:
+     *     tags: Carts
+     *     description: Updates current user cart
+     *     produces: application/json
+     *     responses:
+     *       200:
+     *         description: Successfully updated
+     */
     // PUT - update current user cart
     router.put('/', async (req, res, next) => {
         try {
@@ -65,6 +105,17 @@ module.exports = (app) => {
 
     })
 
+    /**
+     * @swagger
+     * /cart:
+     *   put:
+     *     tags: Carts
+     *     description: Updates user cart's quantity by 1
+     *     produces: application/json
+     *     responses:
+     *       200:
+     *         description: Successfully updated
+     */
     // PUT - Add 1 quantity to user cart
     router.put('/add', async (req, res, next) => {
         try {
@@ -88,6 +139,17 @@ module.exports = (app) => {
         }
     })
 
+    /**
+     * @swagger
+     * /cart:
+     *   put:
+     *     tags: Carts
+     *     description: Updates user cart's quantity by -1
+     *     produces: application/json
+     *     responses:
+     *       200:
+     *         description: Successfully updated
+     */
     // PUT - Subtract 1 quantity to user cart
     router.put('/sub', async (req, res, next) => {
         try {
@@ -112,6 +174,19 @@ module.exports = (app) => {
         }
     })
 
+    /**
+     * @swagger
+     * /cart:
+     *   delete:
+     *     tags:
+     *       - Carts
+     *     description: Deletes the current user cart
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: Successfully deleted
+     */
     // DELETE - delete current user cart
     router.delete('/', async (req, res, next) => {
         try {

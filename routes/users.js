@@ -8,6 +8,21 @@ module.exports = (app) => {
     // applying user route
     app.use('/user', router);
 
+    /**
+     * @swagger
+     * /user:
+     *   get:
+     *     tags:
+     *       - User
+     *     description: Returns the current user profile
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: The user profile
+     *         schema:
+     *           $ref: '#/definitions/User'
+     */
     // GET - get profile of currently logged in user
     router.get('/', async (req, res, next) => {
         try {
@@ -24,7 +39,19 @@ module.exports = (app) => {
         }
     });
 
-
+    /**
+     * @swagger
+     * /user:
+     *   get:
+     *     tags:
+     *       - User
+     *     description: Updates current user profile
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: The user profile
+     */
     // PUT - update current user's profile
     router.put('/', async (req, res, next) => {
         try {
@@ -43,6 +70,19 @@ module.exports = (app) => {
 
     })
 
+    /**
+     * @swagger
+     * /user:
+     *   delete:
+     *     tags:
+     *       - User
+     *     description: Deletes current user profile
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: Successfully deleted
+     */
     // DELETE - delete current user's profile
     router.delete('/', async (req, res, next) => {
         try {

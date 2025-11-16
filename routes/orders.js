@@ -16,7 +16,26 @@ module.exports = (app) => {
     // applying order route
     app.use('/checkout', router);
 
-
+    /**
+     * @swagger
+     * /checkout:
+     *   post:
+     *     tags:
+     *       - Orders
+     *     description: Creates a new order
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: order
+     *         description: Order object
+     *         in: body
+     *         required: true
+     *         schema:
+     *           $ref: '#/definitions/Order'
+     *     responses:
+     *       200:
+     *         description: Successfully created
+     */
     // POST - checkout/create an order
     router.post('/', async (req, res, next) => {
         try {
@@ -58,6 +77,24 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * @swagger
+     * /checkout:
+     *   put:
+     *     tags: Orders
+     *     description: Mark an order as complete
+     *     produces: application/json
+     *     parameters:
+     *       name: order
+     *       in: body
+     *       description: Fields for the Order resource
+     *       schema:
+     *         type: array
+     *         $ref: '#/definitions/Order'
+     *     responses:
+     *       200:
+     *         description: Successfully updated
+     */
     // PUT - Checkout / Mark order as complete
     router.put('/', async (req, res, next) => {
         try {
@@ -81,6 +118,21 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * @swagger
+     * /checkout:
+     *   get:
+     *     tags:
+     *       - Orders
+     *     description: Returns the current user order
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: The user order
+     *         schema:
+     *           $ref: '#/definitions/Orders'
+     */
     // GET - Get order from user id
     router.get('/', async (req, res, next) => {
         try {
@@ -96,6 +148,19 @@ module.exports = (app) => {
         }
     });
 
+    /**
+     * @swagger
+     * /checkout:
+     *   delete:
+     *     tags:
+     *       - Orders
+     *     description: Deletes the user's order
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: Successfully deleted
+     */
     // DELETE - Delete order using user id
     router.delete('/', async (req, res, next) => {
         try {

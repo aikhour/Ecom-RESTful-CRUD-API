@@ -8,6 +8,27 @@ module.exports = (app) => {
     // applying user route
     app.use('/products', router);
 
+    /**
+     * @swagger
+     * /products/{productId}:
+     *   get:
+     *     tags:
+     *       - Product
+     *     description: Returns a single product
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: productId
+     *         description: Product's id
+     *         in: path
+     *         required: true
+     *         type: integer
+     *     responses:
+     *       200:
+     *         description: A single product
+     *         schema:
+     *           $ref: '#/definitions/Product'
+     */
     /** GET get product from id
      * @params {Object} data [product id]
      * @returns {Object|null} [product Record]
@@ -28,7 +49,21 @@ module.exports = (app) => {
         }
     });
     
-    
+    /**
+     * @swagger
+     * /products:
+     *   get:
+     *     tags:
+     *       - Products
+     *     description: Returns all products
+     *     produces:
+     *       - application/json
+     *     responses:
+     *       200:
+     *         description: An array of products
+     *         schema:
+     *           $ref: '#/definitions/Products'
+     */
     /**
      * GET get all products
      * @return {Object|null} [First 10 product records]
@@ -47,7 +82,24 @@ module.exports = (app) => {
     })
     
 
-
+    /**
+     * @swagger
+     * /products/{productId}:
+     *   put:
+     *     tags: Products
+     *     description: Updates a single product
+     *     produces: application/json
+     *     parameters:
+     *       name: productId
+     *       in: body
+     *       description: Fields for the product
+     *       schema:
+     *         type: object
+     *         $ref: '#/definitions/Products'
+     *     responses:
+     *       200:
+     *         description: Successfully updated
+     */
     /**
      * PUT update product using req params
      * @params {Object} data [User New Data]
@@ -91,6 +143,26 @@ module.exports = (app) => {
 
     })
 
+
+    /**
+     * @swagger
+     * /products/{productId}:
+     *   delete:
+     *     tags:
+     *       - Products
+     *     description: Deletes a single product
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: productId
+     *         description: Product's Id
+     *         in: path
+     *         required: true
+     *         type: integer
+     *     responses:
+     *       200:
+     *         description: Successfully deleted
+     */    
     /**
      * DELETE delete product by id
      * @params {Integer} id [Product id]
@@ -127,7 +199,26 @@ module.exports = (app) => {
 
     // creating product records
 
-
+    /**
+     * @swagger
+     * /products:
+     *   post:
+     *     tags:
+     *       - Products
+     *     description: Creates a new product
+     *     produces:
+     *       - application/json
+     *     parameters:
+     *       - name: product
+     *         description: Product object
+     *         in: body
+     *         required: true
+     *         schema:
+     *           $ref: '#/definitions/Product'
+     *     responses:
+     *       200:
+     *         description: Successfully created
+     */
     /**
      * POST create product
      * @params {Object} data [New product Data]
