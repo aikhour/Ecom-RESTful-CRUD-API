@@ -96,6 +96,33 @@ module.exports = class OrderModel {
     }
 
     /**
+     * GET Get order record by user id
+     * @param {Integer} id [user ID]
+     * @return {Object|null} [Order Record]
+     */
+    async getOrderByUserId(id) {
+        try {
+            // generate sql statement
+            const statement = `SELECT * FROM order_table WHERE user_id = $1`;
+            const values = [id];
+
+            // execute sql statement
+            const result = await db.query(statement, values);
+
+            // if success
+            if (result.rows?.length) {
+                return result.rows[0];
+            }
+            // if unsuccessful
+            return null;
+
+
+        } catch(error) {
+            throw new Error(error);
+        }
+    }    
+
+    /**
      * GET Get all orders
      * @return {Object|null} [First 10 Order Records]
      */
@@ -137,7 +164,7 @@ module.exports = class OrderModel {
 
             // if success
             if(result.rows?.length) {
-                return result.rows[0];
+                return `Order deleted.`;
             }
             // if unsuccessful
             return null;

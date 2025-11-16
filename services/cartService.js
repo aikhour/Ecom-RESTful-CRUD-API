@@ -101,11 +101,12 @@ module.exports = class CartService {
      * @params {Object} data [New Cart Data]
      * @returns {Object|null} [New Cart Record]
      */
-    async createCart(data) {
+    async createCart(userId) {
 
         try {
             // Check for cart record, otherwise creates new one
-            const user = await CartModelInstance.createCart(data);
+            const user = await CartModelInstance.createCart(userId);
+            
             
             // if success
             return user;

@@ -25,7 +25,7 @@ module.exports = (app, passport) => {
     try {
       const { email, password } = req.body;
       
-    
+      console.log(req.user);
       const response = await AuthServiceInstance.login({ email: email, password: password});
     
       res.status(200).send(`Logged in as user: ${response.email}`);
