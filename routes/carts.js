@@ -78,7 +78,6 @@ module.exports = (app) => {
             const quantity = oldQuantity + 1;
             // new cart
             const newCart = {id: cartId, quantity: quantity};
-            console.log(newCart);
 
             // response from service call
             const response = await CartServiceInstance.updateCart(newCart);

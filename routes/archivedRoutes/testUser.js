@@ -1,6 +1,6 @@
 const user =
 {
-    "id": 3,
+    "id": 1,
     "username": "duck1",
     "password": "duck",
     "email": "duck@memm.com"
