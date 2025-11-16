@@ -65,6 +65,54 @@ module.exports = (app) => {
 
     })
 
+    // PUT - Add 1 quantity to user cart
+    router.put('/add', async (req, res, next) => {
+        try {
+            // get userId
+            const userId = req.user.id;
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
+            const oldQuantity = cart.quantity;
+            // add 1 to quantity
+            const quantity = oldQuantity + 1;
+            // new cart
+            const newCart = {id: cartId, quantity: quantity};
+            console.log(newCart);
+
+            // response from service call
+            const response = await CartServiceInstance.updateCart(newCart);
+            // success
+            res.status(200).send(response);
+        } catch(error) {
+            next(error);
+        }
+    })
+
+    // PUT - Subtract 1 quantity to user cart
+    router.put('/sub', async (req, res, next) => {
+        try {
+            // get userId
+            const userId = req.user.id;
+            // updating cart requires inclusion of cart id
+            const cart = await CartServiceInstance.getCartByUserId(userId);
+            const cartId = cart.id;
+            const oldQuantity = cart.quantity;
+            // add 1 to quantity
+            const quantity = oldQuantity - 1;
+            // new cart
+            const newCart = {id: cartId, quantity: quantity};
+            console.log(newCart);
+
+            // response from service call
+            const response = await CartServiceInstance.updateCart(newCart);
+            // success
+            res.status(200).send(response);
+        } catch(error) {
+            next(error);
+        }
+    })
+
     // DELETE - delete current user cart
     router.delete('/', async (req, res, next) => {
         try {

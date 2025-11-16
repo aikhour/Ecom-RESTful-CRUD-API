@@ -58,7 +58,7 @@ module.exports = (app) => {
         }
     });
 
-    // PUT - Mark order as complete
+    // PUT - Checkout / Mark order as complete
     router.put('/', async (req, res, next) => {
         try {
             // get userid
